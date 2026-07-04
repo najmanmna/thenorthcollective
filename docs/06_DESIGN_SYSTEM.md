@@ -74,8 +74,8 @@ The visual system is derived from The North Collective's logo mark: a vintage he
 
 ### Framing
 
-- Image and category tiles use a "heritage double-border" frame: an outer border (`border-ink/20`–`/30`, `p-2`), an inset hairline border (`border-ink/10`, `inset-1.5`), and four bronze corner brackets (2px, `border-bronze/70` at rest, full `border-bronze` on hover for interactive tiles). This reads as a considered, gallery-label presentation rather than a plain card.
-- Section eyebrows are centered (or left-aligned when paired with a right-aligned action) and flanked by short bronze rule lines (`h-px w-8 bg-bronze/40`) either side of the uppercase tracked label, rather than a bare label alone.
+- **Revised after first client feedback round (too ornate/"old school").** Image, category, and product tiles use a single thin border (`border-ink/15`, darkening to `border-ink/40` on hover) — no inset double-border, no corner brackets. The earlier "heritage double-border + bronze corner bracket" treatment read as vintage/heritage-badge styling rather than clean and minimal, so it was dropped in favor of restraint. Keep this single-border pattern as the standard for all tiles going forward.
+- Section eyebrows are a single uppercase, medium-tracked label (`text-xs font-medium tracking-wide text-bronze uppercase`) — no flanking divider lines. The earlier line-flanked pattern, repeated on every section, was part of what made the page feel busy rather than calm.
 
 ### Motion
 
@@ -104,7 +104,8 @@ The design system should support:
 - Use Fraunces for display/headings and Inter for body/UI typography.
 - Build the design system around clear spacing, typography, and imagery hierarchy.
 - Favor deliberate, expressive-ease motion (250ms small UI, 600-850ms entrances/cross-fades, `cubic-bezier(0.16, 1, 0.3, 1)`) over snappy or flashy animation.
-- Use the heritage double-border + bronze corner-bracket frame as the standard treatment for image and category tiles; use `mix-blend-multiply` on product photography to absorb white backgrounds into the card surface.
+- Use a single thin border (darkening on hover) as the standard treatment for image, category, and product tiles — not the earlier double-border/corner-bracket frame; use `mix-blend-multiply` on product photography to absorb white backgrounds into the card surface.
+- Homepage sections should stay product-first: one short headline (not paragraph copy) in the hero, and process/education content (e.g. "How It Works") lives on the page where it's contextually needed (order list/checkout) rather than on the homepage.
 - Primary buttons (`Button` default variant) are ink-background with ivory text, uppercase tracked, and reveal a bronze border on hover, not the generic bronze-fill button.
 - Make the system adaptable so future brand projects can reuse the foundation with new visual identity by swapping tokens, not structure.
 

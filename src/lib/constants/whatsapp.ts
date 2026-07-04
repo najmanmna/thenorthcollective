@@ -22,3 +22,27 @@ export function buildWhatsAppOrderLink(orderNumber: string) {
 export function buildWhatsAppGeneralLink() {
   return buildWhatsAppLink("Hi! I have a question about The North Collective.");
 }
+
+export function buildWhatsAppCustomOrderLink({
+  requestId,
+  name,
+  phone,
+  details,
+  notes,
+}: {
+  requestId: string;
+  name: string;
+  phone: string;
+  details: string;
+  notes?: string;
+}) {
+  const lines = [
+    `Hi! I'd like to request a custom order from The North Collective (Request ${requestId}).`,
+    `Name: ${name}`,
+    `Phone: ${phone}`,
+    `What I'm looking for: ${details}`,
+  ];
+  if (notes) lines.push(`Additional notes: ${notes}`);
+
+  return buildWhatsAppLink(lines.join("\n"));
+}

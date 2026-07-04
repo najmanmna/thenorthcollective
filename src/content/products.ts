@@ -56,6 +56,7 @@ export const PRODUCTS: Product[] = [
     availability: "preorder",
     image: "/8d3cff7f7df92851b8e78fc2dd8a33cc.jpg_720x720q80.jpg",
     category: "nuts-healthy-foods",
+    isNew: true,
     description:
       "Naturally opened, roasted and salted pistachios in the shell, a satisfying, protein-rich snack.",
   },
@@ -102,6 +103,7 @@ export const PRODUCTS: Product[] = [
     availability: "preorder",
     image: "/71KsMZ0X+tL.jpg",
     category: "healthcare",
+    isNew: true,
     description:
       "A lightweight, non-greasy daily facial moisturizer with SPF 50 broad-spectrum UVA/UVB protection.",
   },
@@ -113,6 +115,7 @@ export const PRODUCTS: Product[] = [
     availability: "available",
     image: "/images-1.jpeg",
     category: "skincare-personal-care",
+    isNew: true,
     description:
       "Clinically proven 24-hour moisturization for dry skin, formulated with prebiotic oat.",
   },
@@ -124,6 +127,7 @@ export const PRODUCTS: Product[] = [
     availability: "available",
     image: "/61NFiXlziwL._AC_UF894,1000_QL80_FMwebp_.webp",
     category: "skincare-personal-care",
+    isNew: true,
     description:
       "A fragrance-free body wash with triple oat formula, made to soothe dry and itchy skin.",
   },

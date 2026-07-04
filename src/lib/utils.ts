@@ -15,8 +15,8 @@ export function formatPrice(amount: number) {
   return priceFormatter.format(amount)
 }
 
-export function generateOrderNumber(date: Date = new Date()) {
+export function generateOrderNumber(prefix = "NC", date: Date = new Date()) {
   const datePart = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}`
   const randomPart = Math.floor(1000 + Math.random() * 9000)
-  return `NC-${datePart}-${randomPart}`
+  return `${prefix}-${datePart}-${randomPart}`
 }

@@ -7,20 +7,14 @@ import type { Product } from "@/types/product";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
-    <Link
-      href={`/shop/products/${product.id}`}
-      className="group relative flex flex-col border border-ink/20 bg-ivory p-2 transition-all duration-500 hover:border-ink/50 hover:shadow-sm"
-    >
-      {/* Heritage Double-Border Inner Frame */}
-      <div className="pointer-events-none absolute inset-1.5 z-10 border border-ink/10 transition-colors duration-500 group-hover:border-ink/20" />
-
+    <Link href={`/shop/products/${product.id}`} className="group flex flex-col">
       <div className="relative aspect-square overflow-hidden bg-surface">
         <Image
           src={product.image}
           alt={product.name}
           fill
-          sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-          className="object-contain p-8 mix-blend-multiply transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 90vw"
+          className="object-contain p-8 mix-blend-multiply transition-transform duration-300 ease-out group-hover:scale-[1.03]"
         />
         <Badge
           variant={
@@ -28,8 +22,8 @@ export function ProductCard({ product }: { product: Product }) {
           }
           className={
             product.availability === "preorder"
-              ? "absolute top-4 left-4 z-30 border-bronze bg-ivory/80 text-[10px] font-medium tracking-wide text-bronze uppercase shadow-sm backdrop-blur-sm"
-              : "absolute top-4 left-4 z-30 bg-ink text-[10px] font-medium tracking-wide text-ivory uppercase shadow-sm hover:bg-ink"
+              ? "absolute top-2 left-2 h-4 border-bronze bg-ivory/90 px-1.5 py-0 text-[8px] font-medium tracking-wide text-bronze uppercase sm:top-3 sm:left-3 sm:h-5 sm:px-2 sm:py-0.5 sm:text-[10px]"
+              : "absolute top-2 left-2 h-4 bg-ink px-1.5 py-0 text-[8px] font-medium tracking-wide text-ivory uppercase hover:bg-ink sm:top-3 sm:left-3 sm:h-5 sm:px-2 sm:py-0.5 sm:text-[10px]"
           }
         >
           {product.availability === "available"
@@ -38,23 +32,17 @@ export function ProductCard({ product }: { product: Product }) {
         </Badge>
       </div>
 
-      <div className="relative z-20 mt-2 flex flex-1 flex-col gap-1.5 p-6 text-center">
-        <span className="text-[10px] font-bold tracking-[0.2em] text-stone uppercase">
+      <div className="flex flex-col gap-1 pt-3">
+        <span className="text-[11px] font-medium tracking-wide text-stone uppercase">
           {product.brand}
         </span>
-        <h3 className="font-display text-lg leading-tight text-ink">
+        <h3 className="line-clamp-2 text-sm leading-snug font-medium text-ink">
           {product.name}
         </h3>
-        <span className="mt-1 text-sm font-medium text-ink/80">
+        <span className="text-sm font-semibold text-ink">
           {formatPrice(product.price)}
         </span>
       </div>
-
-      {/* Decorative Brand Brackets */}
-      <span className="pointer-events-none absolute top-2 left-2 z-20 h-3 w-3 border-t-2 border-l-2 border-bronze/70 transition-colors group-hover:border-bronze" />
-      <span className="pointer-events-none absolute top-2 right-2 z-20 h-3 w-3 border-t-2 border-r-2 border-bronze/70 transition-colors group-hover:border-bronze" />
-      <span className="pointer-events-none absolute bottom-2 left-2 z-20 h-3 w-3 border-b-2 border-l-2 border-bronze/70 transition-colors group-hover:border-bronze" />
-      <span className="pointer-events-none absolute right-2 bottom-2 z-20 h-3 w-3 border-r-2 border-b-2 border-bronze/70 transition-colors group-hover:border-bronze" />
     </Link>
   );
 }

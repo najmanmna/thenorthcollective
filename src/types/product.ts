@@ -9,6 +9,7 @@ export type Product = {
   image: string;
   category: string;
   featured?: boolean;
+  isNew?: boolean;
   description?: string;
 };
 

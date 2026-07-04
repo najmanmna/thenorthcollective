@@ -1,19 +1,23 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Search } from "lucide-react";
 
 import type { Product } from "@/types/product";
+import { MobileCategoryFilter } from "./mobile-category-filter";
 import { ProductCard } from "./product-card";
 
 export function LiveProductGrid({
   products,
-  initialQuery = "",
+  query,
+  onQueryChange,
+  activeCategory,
 }: {
   products: Product[];
-  initialQuery?: string;
+  query: string;
+  onQueryChange: (value: string) => void;
+  activeCategory?: string;
 }) {
-  const [query, setQuery] = useState(initialQuery);
   const normalizedQuery = query.trim().toLowerCase();
 
   const filtered = useMemo(() => {
@@ -27,20 +31,23 @@ export function LiveProductGrid({
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="mx-auto flex w-full max-w-md items-center border border-ink/20 bg-surface focus-within:border-ink/50">
-        <Search className="ml-4 h-4 w-4 shrink-0 text-bronze" />
-        <input
-          type="text"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search products or brands"
-          aria-label="Search products or brands"
-          className="w-full bg-transparent px-4 py-3 text-sm text-ink placeholder:text-stone focus:outline-none"
-        />
+      <div className="mx-auto flex w-full max-w-md items-center gap-2 lg:hidden">
+        <div className="flex flex-1 items-center border border-ink/20 bg-surface focus-within:border-ink/50">
+          <Search className="ml-4 h-4 w-4 shrink-0 text-bronze" />
+          <input
+            type="text"
+            value={query}
+            onChange={(event) => onQueryChange(event.target.value)}
+            placeholder="Search products or brands"
+            aria-label="Search products or brands"
+            className="w-full bg-transparent px-4 py-3 text-sm text-ink placeholder:text-stone focus:outline-none"
+          />
+        </div>
+        <MobileCategoryFilter activeCategory={activeCategory} />
       </div>
 
       {filtered.length > 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
           {filtered.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

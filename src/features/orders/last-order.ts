@@ -24,11 +24,27 @@ export function saveLastOrder(order: SubmittedOrder) {
   window.localStorage.setItem(LAST_ORDER_KEY, JSON.stringify(order));
 }
 
-export function readLastOrder(): SubmittedOrder | null {
+let cachedRaw: string | null = null;
+let cachedOrder: SubmittedOrder | null = null;
+
+// Cached so repeated calls from useSyncExternalStore's getSnapshot return a
+// stable reference instead of re-parsing (and re-triggering renders) every time.
+export function getLastOrderSnapshot(): SubmittedOrder | null {
+  const raw = window.localStorage.getItem(LAST_ORDER_KEY);
+  if (raw === cachedRaw) return cachedOrder;
+  cachedRaw = raw;
   try {
-    const raw = window.localStorage.getItem(LAST_ORDER_KEY);
-    return raw ? (JSON.parse(raw) as SubmittedOrder) : null;
+    cachedOrder = raw ? (JSON.parse(raw) as SubmittedOrder) : null;
   } catch {
-    return null;
+    cachedOrder = null;
   }
+  return cachedOrder;
+}
+
+export function getLastOrderServerSnapshot(): SubmittedOrder | null {
+  return null;
+}
+
+export function subscribeToLastOrder() {
+  return () => {};
 }

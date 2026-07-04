@@ -1,26 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppOrderLink } from "@/lib/constants/whatsapp";
 import { formatPrice } from "@/lib/utils";
-import { readLastOrder, type SubmittedOrder } from "./last-order";
+import {
+  getLastOrderServerSnapshot,
+  getLastOrderSnapshot,
+  subscribeToLastOrder,
+} from "./last-order";
 
 export function OrderSuccessView() {
-  const [order, setOrder] = useState<SubmittedOrder | null | undefined>(
-    undefined
+  const order = useSyncExternalStore(
+    subscribeToLastOrder,
+    getLastOrderSnapshot,
+    getLastOrderServerSnapshot
   );
-
-  useEffect(() => {
-    setOrder(readLastOrder());
-  }, []);
-
-  if (order === undefined) {
-    return null;
-  }
 
   if (order === null) {
     return (

@@ -34,6 +34,11 @@ export function OrderListProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
+      // One-time hydration from localStorage (unavailable during SSR), after
+      // which `items` becomes React-owned state. Not a fit for
+      // useSyncExternalStore since localStorage isn't the source of truth
+      // past this point.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (stored) setItems(JSON.parse(stored));
     } catch {
       // Ignore malformed or inaccessible storage; start from an empty list.

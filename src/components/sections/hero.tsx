@@ -19,11 +19,6 @@ const BANNERS = [
     image: "/banner-skincare.png",
     alt: "Skincare textures and botanicals flat lay",
   },
-  {
-    id: "vitamins-supplements",
-    image: "/banner-wellness.jpg",
-    alt: "Citrus fruit and supplement capsules",
-  },
 ];
 
 const AUTOPLAY_INTERVAL_MS = 5500;
@@ -60,7 +55,7 @@ export function Hero() {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative aspect-video w-full overflow-hidden sm:aspect-auto sm:h-140 lg:h-160">
+      <div className="relative aspect-3/2 w-full overflow-hidden sm:aspect-auto sm:h-140 lg:h-160">
         <AnimatePresence initial={false}>
           <motion.div
             key={banner.id}

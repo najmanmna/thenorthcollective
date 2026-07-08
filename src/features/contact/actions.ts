@@ -1,6 +1,6 @@
 "use server";
 
-import { escapeHtml, NOTIFICATION_FROM, NOTIFICATION_TO, resend } from "@/lib/email/client";
+import { escapeHtml, getResendClient, NOTIFICATION_FROM, NOTIFICATION_TO } from "@/lib/email/client";
 
 export async function submitContactForm(input: {
   name: string;
@@ -8,7 +8,7 @@ export async function submitContactForm(input: {
   message: string;
 }) {
   try {
-    await resend.emails.send({
+    await getResendClient().emails.send({
       from: NOTIFICATION_FROM,
       to: NOTIFICATION_TO,
       replyTo: input.email,

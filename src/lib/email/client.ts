@@ -1,13 +1,22 @@
 import "server-only";
 import { Resend } from "resend";
 
-const apiKey = process.env.RESEND_API_KEY;
+let client: Resend | undefined;
 
-if (!apiKey) {
-  throw new Error("Missing RESEND_API_KEY in .env.local");
+// Lazy for the same reason as the Sanity write client — a missing
+// RESEND_API_KEY should only fail the specific send attempt (caught by the
+// caller), not crash the whole action at import time.
+export function getResendClient(): Resend {
+  if (client) return client;
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("Missing RESEND_API_KEY");
+  }
+
+  client = new Resend(apiKey);
+  return client;
 }
-
-export const resend = new Resend(apiKey);
 
 // Resend's shared testing sender. Until a domain is verified on the account,
 // Resend restricts delivery to only the email the account is registered

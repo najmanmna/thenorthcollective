@@ -1,8 +1,8 @@
 "use server";
 
-import { escapeHtml, NOTIFICATION_FROM, NOTIFICATION_TO, resend } from "@/lib/email/client";
+import { escapeHtml, getResendClient, NOTIFICATION_FROM, NOTIFICATION_TO } from "@/lib/email/client";
 import { buildWhatsAppCustomOrderLink, WHATSAPP_BUSINESS_NUMBER } from "@/lib/constants/whatsapp";
-import { sanityWriteClient } from "@/lib/sanity/write-client";
+import { getSanityWriteClient } from "@/lib/sanity/write-client";
 
 // Same reasoning as orders: WhatsApp is the real handoff. Sanity and email
 // are independent side effects, each logged (not thrown) on failure.
@@ -15,7 +15,7 @@ export async function submitCustomOrderRequest(input: {
   notes?: string;
 }) {
   try {
-    await sanityWriteClient.create({
+    await getSanityWriteClient().create({
       _type: "customOrderRequest",
       requestId: input.requestId,
       customer: { name: input.name, phone: input.phone, email: input.email },
@@ -29,7 +29,7 @@ export async function submitCustomOrderRequest(input: {
   }
 
   try {
-    await resend.emails.send({
+    await getResendClient().emails.send({
       from: NOTIFICATION_FROM,
       to: NOTIFICATION_TO,
       subject: `New Custom Order Request: ${input.requestId}`,
@@ -52,7 +52,7 @@ export async function submitCustomOrderRequest(input: {
     try {
       const whatsAppLink = buildWhatsAppCustomOrderLink(input);
 
-      await resend.emails.send({
+      await getResendClient().emails.send({
         from: NOTIFICATION_FROM,
         to: input.email,
         subject: `Request Received — ${input.requestId}`,

@@ -1,8 +1,8 @@
 "use server";
 
-import { escapeHtml, NOTIFICATION_FROM, NOTIFICATION_TO, resend } from "@/lib/email/client";
+import { escapeHtml, getResendClient, NOTIFICATION_FROM, NOTIFICATION_TO } from "@/lib/email/client";
 import { buildWhatsAppOrderLink, WHATSAPP_BUSINESS_NUMBER } from "@/lib/constants/whatsapp";
-import { sanityWriteClient } from "@/lib/sanity/write-client";
+import { getSanityWriteClient } from "@/lib/sanity/write-client";
 import { formatPrice } from "@/lib/utils";
 import type { SubmittedOrder } from "./last-order";
 
@@ -12,7 +12,7 @@ import type { SubmittedOrder } from "./last-order";
 // stop the other from being attempted.
 export async function submitOrder(order: SubmittedOrder) {
   try {
-    await sanityWriteClient.create({
+    await getSanityWriteClient().create({
       _type: "order",
       orderNumber: order.orderNumber,
       customer: order.customer,
@@ -40,7 +40,7 @@ export async function submitOrder(order: SubmittedOrder) {
       )
       .join("");
 
-    await resend.emails.send({
+    await getResendClient().emails.send({
       from: NOTIFICATION_FROM,
       to: NOTIFICATION_TO,
       subject: `New Order: ${order.orderNumber}`,
@@ -65,7 +65,7 @@ export async function submitOrder(order: SubmittedOrder) {
     try {
       const whatsAppLink = buildWhatsAppOrderLink(order.orderNumber);
 
-      await resend.emails.send({
+      await getResendClient().emails.send({
         from: NOTIFICATION_FROM,
         to: order.customer.email,
         subject: `Order Received — ${order.orderNumber}`,

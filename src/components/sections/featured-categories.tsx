@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { CATEGORIES } from "@/content/categories";
+import type { Category } from "@/types/product";
 
-export function FeaturedCategories() {
+export function FeaturedCategories({ categories }: { categories: Category[] }) {
   return (
     <section className="bg-surface py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -17,7 +17,7 @@ export function FeaturedCategories() {
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-6 lg:grid-cols-3">
-          {CATEGORIES.map((category) => (
+          {categories.map((category) => (
             <Link
               key={category.slug}
               href={`/shop/${category.slug}`}

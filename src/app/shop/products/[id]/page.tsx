@@ -4,13 +4,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
-import { CATEGORIES } from "@/content/categories";
-import { PRODUCTS } from "@/content/products";
 import { ProductCard } from "@/features/catalog/product-card";
 import { ProductDetailPanel } from "@/features/catalog/product-detail-panel";
+import { getAllCategories, getProductWithRelated } from "@/lib/sanity/queries";
 import { formatPrice } from "@/lib/utils";
-
-const RELATED_PRODUCTS_LIMIT = 4;
 
 export async function generateMetadata({
   params,
@@ -18,15 +15,15 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const product = PRODUCTS.find((item) => item.id === id);
+  const result = await getProductWithRelated(id);
 
-  if (!product) {
+  if (!result) {
     return { title: "Product Not Found at The North Collective" };
   }
 
   return {
-    title: `${product.name} at The North Collective`,
-    description: product.description,
+    title: `${result.product.name} at The North Collective`,
+    description: result.product.description,
   };
 }
 
@@ -36,17 +33,17 @@ export default async function ProductDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const product = PRODUCTS.find((item) => item.id === id);
+  const [result, categories] = await Promise.all([
+    getProductWithRelated(id),
+    getAllCategories(),
+  ]);
 
-  if (!product) {
+  if (!result) {
     notFound();
   }
 
-  const category = CATEGORIES.find((item) => item.slug === product.category);
-
-  const relatedProducts = PRODUCTS.filter(
-    (item) => item.category === product.category && item.id !== product.id
-  ).slice(0, RELATED_PRODUCTS_LIMIT);
+  const { product, related: relatedProducts } = result;
+  const category = categories.find((item) => item.slug === product.category);
 
   return (
     <div className="bg-surface">

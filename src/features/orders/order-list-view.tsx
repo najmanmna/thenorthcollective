@@ -6,17 +6,16 @@ import { Minus, Plus, X } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { PRODUCTS } from "@/content/products";
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/types/product";
 import { useOrderList } from "./order-list-context";
 
-export function OrderListView() {
+export function OrderListView({ products }: { products: Product[] }) {
   const { items, updateQuantity, removeItem } = useOrderList();
 
   const lineItems = items
     .map((item) => {
-      const product = PRODUCTS.find((entry) => entry.id === item.productId);
+      const product = products.find((entry) => entry.id === item.productId);
       return product ? { product, quantity: item.quantity } : null;
     })
     .filter(

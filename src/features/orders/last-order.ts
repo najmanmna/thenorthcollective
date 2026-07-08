@@ -4,6 +4,7 @@ export type SubmittedOrderItem = {
   brand: string;
   price: number;
   quantity: number;
+  image?: string;
 };
 
 export type SubmittedOrder = {
@@ -12,6 +13,7 @@ export type SubmittedOrder = {
   customer: {
     name: string;
     phone: string;
+    email?: string;
     address: string;
     notes?: string;
   };

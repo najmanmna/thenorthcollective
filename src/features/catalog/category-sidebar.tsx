@@ -1,11 +1,13 @@
 import Link from "next/link";
 
-import { CATEGORIES } from "@/content/categories";
 import { cn } from "@/lib/utils";
+import type { Category } from "@/types/product";
 
 export function CategorySidebar({
+  categories,
   activeCategory,
 }: {
+  categories: Category[];
   activeCategory?: string;
 }) {
   return (
@@ -24,7 +26,7 @@ export function CategorySidebar({
       >
         All Products
       </Link>
-      {CATEGORIES.map((category) => (
+      {categories.map((category) => (
         <Link
           key={category.slug}
           href={`/shop/${category.slug}`}

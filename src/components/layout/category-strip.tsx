@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { CATEGORIES } from "@/content/categories";
+import type { Category } from "@/types/product";
 
-export function CategoryStrip() {
+export function CategoryStrip({ categories }: { categories: Category[] }) {
   const pathname = usePathname();
 
   if (pathname.startsWith("/shop")) {
@@ -24,7 +24,7 @@ export function CategoryStrip() {
         >
           All Products
         </Link>
-        {CATEGORIES.map((category) => (
+        {categories.map((category) => (
           <Link
             key={category.slug}
             href={`/shop/${category.slug}`}

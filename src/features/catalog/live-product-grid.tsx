@@ -3,17 +3,19 @@
 import { useMemo } from "react";
 import { Search } from "lucide-react";
 
-import type { Product } from "@/types/product";
+import type { Category, Product } from "@/types/product";
 import { MobileCategoryFilter } from "./mobile-category-filter";
 import { ProductCard } from "./product-card";
 
 export function LiveProductGrid({
   products,
+  categories,
   query,
   onQueryChange,
   activeCategory,
 }: {
   products: Product[];
+  categories: Category[];
   query: string;
   onQueryChange: (value: string) => void;
   activeCategory?: string;
@@ -43,7 +45,7 @@ export function LiveProductGrid({
             className="w-full bg-transparent px-4 py-3 text-sm text-ink placeholder:text-stone focus:outline-none"
           />
         </div>
-        <MobileCategoryFilter activeCategory={activeCategory} />
+        <MobileCategoryFilter categories={categories} activeCategory={activeCategory} />
       </div>
 
       {filtered.length > 0 ? (

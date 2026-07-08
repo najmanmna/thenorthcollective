@@ -11,11 +11,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import type { Category } from "@/types/product";
 import { CategorySidebar } from "./category-sidebar";
 
 export function MobileCategoryFilter({
+  categories,
   activeCategory,
 }: {
+  categories: Category[];
   activeCategory?: string;
 }) {
   const [open, setOpen] = useState(false);
@@ -34,7 +37,7 @@ export function MobileCategoryFilter({
           </SheetTitle>
         </SheetHeader>
         <div className="px-4" onClick={() => setOpen(false)}>
-          <CategorySidebar activeCategory={activeCategory} />
+          <CategorySidebar categories={categories} activeCategory={activeCategory} />
         </div>
       </SheetContent>
     </Sheet>

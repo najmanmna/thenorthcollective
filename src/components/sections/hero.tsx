@@ -7,19 +7,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-
-const BANNERS = [
-  {
-    id: "grocery-pantry",
-    image: "/banner-pantry.png",
-    alt: "Maple syrup in maple-leaf-shaped glass bottles",
-  },
-  {
-    id: "skincare-personal-care",
-    image: "/banner-skincare.png",
-    alt: "Skincare textures and botanicals flat lay",
-  },
-];
+import type { HeroBanner } from "@/lib/sanity/queries";
 
 const AUTOPLAY_INTERVAL_MS = 5500;
 const SWIPE_CONFIDENCE_THRESHOLD = 10000;
@@ -28,26 +16,34 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-export function Hero() {
+export function Hero({ banners }: { banners: HeroBanner[] }) {
   const prefersReducedMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  const goTo = useCallback((next: number) => {
-    setIndex(((next % BANNERS.length) + BANNERS.length) % BANNERS.length);
-  }, []);
+  const goTo = useCallback(
+    (next: number) => {
+      setIndex(((next % banners.length) + banners.length) % banners.length);
+    },
+    [banners.length]
+  );
 
   useEffect(() => {
-    if (prefersReducedMotion || isHovered) return;
+    if (prefersReducedMotion || isHovered || banners.length < 2) return;
 
     const id = setInterval(() => {
-      setIndex((current) => (current + 1) % BANNERS.length);
+      setIndex((current) => (current + 1) % banners.length);
     }, AUTOPLAY_INTERVAL_MS);
 
     return () => clearInterval(id);
-  }, [prefersReducedMotion, isHovered]);
+  }, [prefersReducedMotion, isHovered, banners.length]);
 
-  const banner = BANNERS[index];
+  if (banners.length === 0) return null;
+
+  const banner = banners[index];
+  const objectPosition = banner.hotspot
+    ? `${banner.hotspot.x * 100}% ${banner.hotspot.y * 100}%`
+    : "50% 50%";
 
   return (
     <section
@@ -77,12 +73,13 @@ export function Hero() {
             }}
           >
             <Image
-              src={banner.image}
+              src={banner.url}
               alt={banner.alt}
               fill
               sizes="100vw"
               priority={index === 0}
-              className="object-cover object-right sm:object-center"
+              className="object-cover"
+              style={{ objectPosition }}
               draggable={false} // Prevent default browser image dragging
             />
 
@@ -98,11 +95,11 @@ export function Hero() {
             className="pointer-events-auto hidden rounded-none border border-transparent bg-ivory px-10 py-6 text-sm tracking-widest text-ink uppercase transition-all hover:bg-white sm:inline-flex"
             asChild
           >
-            <Link href="/shop">Shop Now</Link>
+            <Link href={banner.link}>Shop Now</Link>
           </Button>
 
           <div className="pointer-events-auto flex items-center gap-1">
-            {BANNERS.map((item, i) => (
+            {banners.length > 1 && banners.map((item, i) => (
               <button
                 key={item.id}
                 type="button"
@@ -121,22 +118,26 @@ export function Hero() {
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={() => goTo(index - 1)}
-          aria-label="Previous banner"
-          className="absolute top-1/2 left-4 hidden -translate-y-1/2 rounded-full bg-ivory/70 p-3 text-ink backdrop-blur-md transition-all hover:bg-ivory hover:scale-105 sm:block z-10"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => goTo(index + 1)}
-          aria-label="Next banner"
-          className="absolute top-1/2 right-4 hidden -translate-y-1/2 rounded-full bg-ivory/70 p-3 text-ink backdrop-blur-md transition-all hover:bg-ivory hover:scale-105 sm:block z-10"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
+        {banners.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={() => goTo(index - 1)}
+              aria-label="Previous banner"
+              className="absolute top-1/2 left-4 hidden -translate-y-1/2 rounded-full bg-ivory/70 p-3 text-ink backdrop-blur-md transition-all hover:bg-ivory hover:scale-105 sm:block z-10"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => goTo(index + 1)}
+              aria-label="Next banner"
+              className="absolute top-1/2 right-4 hidden -translate-y-1/2 rounded-full bg-ivory/70 p-3 text-ink backdrop-blur-md transition-all hover:bg-ivory hover:scale-105 sm:block z-10"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </>
+        )}
       </div>
     </section>
   );

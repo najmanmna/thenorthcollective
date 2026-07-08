@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CATEGORIES } from "@/content/categories";
 import { ShopView } from "@/features/catalog/shop-view";
+import { getAllCategories, getAllProducts } from "@/lib/sanity/queries";
 
 export async function generateMetadata({
   params,
@@ -10,7 +10,8 @@ export async function generateMetadata({
   params: Promise<{ category: string }>;
 }): Promise<Metadata> {
   const { category: slug } = await params;
-  const category = CATEGORIES.find((item) => item.slug === slug);
+  const categories = await getAllCategories();
+  const category = categories.find((item) => item.slug === slug);
 
   if (!category) {
     return { title: "Shop at The North Collective" };
@@ -31,12 +32,23 @@ export default async function ShopCategoryPage({
 }) {
   const { category: slug } = await params;
   const { q } = await searchParams;
+  const [products, categories] = await Promise.all([
+    getAllProducts(),
+    getAllCategories(),
+  ]);
 
-  const category = CATEGORIES.find((item) => item.slug === slug);
+  const category = categories.find((item) => item.slug === slug);
 
   if (!category) {
     notFound();
   }
 
-  return <ShopView activeCategory={category.slug} query={q} />;
+  return (
+    <ShopView
+      products={products}
+      categories={categories}
+      activeCategory={category.slug}
+      query={q}
+    />
+  );
 }

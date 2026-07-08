@@ -7,19 +7,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { PRODUCTS } from "@/content/products";
-import { generateOrderNumber } from "@/lib/utils";
+import { generateOrderNumber, isValidEmail } from "@/lib/utils";
+import type { Product } from "@/types/product";
+import { submitOrder } from "./actions";
 import { saveLastOrder } from "./last-order";
 import { useOrderList } from "./order-list-context";
 
-type FormErrors = Partial<Record<"name" | "phone" | "address", string>>;
+type FormErrors = Partial<Record<"name" | "phone" | "email" | "address", string>>;
 
-export function CustomerInfoForm() {
+export function CustomerInfoForm({ products }: { products: Product[] }) {
   const router = useRouter();
   const { items, clearItems } = useOrderList();
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
@@ -31,6 +33,8 @@ export function CustomerInfoForm() {
     const nextErrors: FormErrors = {};
     if (!name.trim()) nextErrors.name = "Please enter your full name.";
     if (!phone.trim()) nextErrors.phone = "Please enter a contact number.";
+    if (email.trim() && !isValidEmail(email.trim()))
+      nextErrors.email = "Please enter a valid email address.";
     if (!address.trim())
       nextErrors.address = "Please enter a delivery address.";
 
@@ -41,7 +45,7 @@ export function CustomerInfoForm() {
 
     const orderItems = items
       .map((item) => {
-        const product = PRODUCTS.find((entry) => entry.id === item.productId);
+        const product = products.find((entry) => entry.id === item.productId);
         return product
           ? {
               productId: product.id,
@@ -49,24 +53,27 @@ export function CustomerInfoForm() {
               brand: product.brand,
               price: product.price,
               quantity: item.quantity,
+              image: product.image || undefined,
             }
           : null;
       })
       .filter((entry): entry is NonNullable<typeof entry> => entry !== null);
 
-    const orderNumber = generateOrderNumber();
-
-    saveLastOrder({
-      orderNumber,
+    const order = {
+      orderNumber: generateOrderNumber(),
       items: orderItems,
       customer: {
         name: name.trim(),
         phone: phone.trim(),
+        email: email.trim() || undefined,
         address: address.trim(),
         notes: notes.trim() || undefined,
       },
       submittedAt: new Date().toISOString(),
-    });
+    };
+
+    saveLastOrder(order);
+    void submitOrder(order);
 
     clearItems();
     router.push("/checkout/success");
@@ -103,6 +110,24 @@ export function CustomerInfoForm() {
         </p>
         {errors.phone && (
           <p className="text-xs text-destructive">{errors.phone}</p>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="email">Email Address (optional)</Label>
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          aria-invalid={Boolean(errors.email)}
+          placeholder="amaya@example.com"
+        />
+        <p className="text-xs text-stone">
+          We&apos;ll send an order confirmation here if provided.
+        </p>
+        {errors.email && (
+          <p className="text-xs text-destructive">{errors.email}</p>
         )}
       </div>
 

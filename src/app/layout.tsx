@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { CategoryStrip } from "@/components/layout/category-strip";
 import { Footer } from "@/components/layout/footer";
 import { OrderListProvider } from "@/features/orders/order-list-context";
+import { getAllCategories } from "@/lib/sanity/queries";
 
 const lato = Lato({
   weight: ["400", "700"],
@@ -17,17 +18,19 @@ export const metadata: Metadata = {
   description: "Curated global finds, sourced from Canada.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const categories = await getAllCategories();
+
   return (
     <html lang="en" className={`${lato.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <OrderListProvider>
-          <Navbar />
-          <CategoryStrip />
+          <Navbar categories={categories} />
+          <CategoryStrip categories={categories} />
           {children}
           <Footer />
         </OrderListProvider>

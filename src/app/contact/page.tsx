@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppGeneralLink } from "@/lib/constants/whatsapp";
+import { ContactForm } from "@/features/contact/contact-form";
 
 export const metadata: Metadata = {
   title: "Contact The North Collective",
-  description: "Reach The North Collective directly over WhatsApp.",
+  description: "Reach The North Collective directly over WhatsApp or email.",
 };
 
 export default function ContactPage() {
@@ -41,6 +42,15 @@ export default function ContactPage() {
             WhatsApp contact isn&apos;t configured yet on this site.
           </p>
         )}
+      </div>
+
+      <div className="mx-auto mt-16 h-px w-16 bg-bronze/40" aria-hidden="true" />
+
+      <div className="mx-auto mt-10 max-w-md text-left">
+        <p className="mb-6 text-center text-sm text-stone">
+          Prefer email? Send us a message directly.
+        </p>
+        <ContactForm />
       </div>
     </div>
   );

@@ -7,13 +7,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { buildWhatsAppCustomOrderLink } from "@/lib/constants/whatsapp";
-import { generateOrderNumber } from "@/lib/utils";
+import { generateOrderNumber, isValidEmail } from "@/lib/utils";
+import { submitCustomOrderRequest } from "./actions";
 
-type FormErrors = Partial<Record<"name" | "phone" | "details", string>>;
+type FormErrors = Partial<Record<"name" | "phone" | "email" | "details", string>>;
 
 export function CustomOrderForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [details, setDetails] = useState("");
   const [notes, setNotes] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
@@ -26,6 +28,8 @@ export function CustomOrderForm() {
     const nextErrors: FormErrors = {};
     if (!name.trim()) nextErrors.name = "Please enter your full name.";
     if (!phone.trim()) nextErrors.phone = "Please enter a contact number.";
+    if (email.trim() && !isValidEmail(email.trim()))
+      nextErrors.email = "Please enter a valid email address.";
     if (!details.trim())
       nextErrors.details = "Tell us what you're looking for.";
 
@@ -33,16 +37,31 @@ export function CustomOrderForm() {
     if (Object.keys(nextErrors).length > 0) return;
 
     const id = generateOrderNumber("CO");
+    const trimmedName = name.trim();
+    const trimmedPhone = phone.trim();
+    const trimmedEmail = email.trim() || undefined;
+    const trimmedDetails = details.trim();
+    const trimmedNotes = notes.trim() || undefined;
+
     const link = buildWhatsAppCustomOrderLink({
       requestId: id,
-      name: name.trim(),
-      phone: phone.trim(),
-      details: details.trim(),
-      notes: notes.trim() || undefined,
+      name: trimmedName,
+      phone: trimmedPhone,
+      details: trimmedDetails,
+      notes: trimmedNotes,
     });
 
     setRequestId(id);
     setWhatsAppLink(link);
+
+    void submitCustomOrderRequest({
+      requestId: id,
+      name: trimmedName,
+      phone: trimmedPhone,
+      email: trimmedEmail,
+      details: trimmedDetails,
+      notes: trimmedNotes,
+    });
   };
 
   if (requestId) {
@@ -107,6 +126,24 @@ export function CustomOrderForm() {
         />
         {errors.phone && (
           <p className="text-xs text-destructive">{errors.phone}</p>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="email">Email Address (optional)</Label>
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          aria-invalid={Boolean(errors.email)}
+          placeholder="amaya@example.com"
+        />
+        <p className="text-xs text-stone">
+          We&apos;ll send a confirmation here if provided.
+        </p>
+        {errors.email && (
+          <p className="text-xs text-destructive">{errors.email}</p>
         )}
       </div>
 

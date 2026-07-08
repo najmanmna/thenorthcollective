@@ -3,27 +3,30 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 
-import { CATEGORIES } from "@/content/categories";
-import { PRODUCTS } from "@/content/products";
+import type { Category, Product } from "@/types/product";
 import { CategorySidebar } from "./category-sidebar";
 import { LiveProductGrid } from "./live-product-grid";
 
 export function ShopView({
+  products,
+  categories,
   activeCategory,
   query: initialQuery,
 }: {
+  products: Product[];
+  categories: Category[];
   activeCategory?: string;
   query?: string;
 }) {
   const [query, setQuery] = useState(initialQuery ?? "");
 
-  const activeCategoryData = CATEGORIES.find(
+  const activeCategoryData = categories.find(
     (category) => category.slug === activeCategory
   );
 
   const categoryProducts = activeCategory
-    ? PRODUCTS.filter((product) => product.category === activeCategory)
-    : PRODUCTS;
+    ? products.filter((product) => product.category === activeCategory)
+    : products;
 
   return (
     <div className="bg-surface py-16 sm:py-20">
@@ -57,12 +60,13 @@ export function ShopView({
 
         <div className="mt-12 lg:grid lg:grid-cols-[220px_1fr] lg:items-start lg:gap-12">
           <aside className="hidden lg:block">
-            <CategorySidebar activeCategory={activeCategory} />
+            <CategorySidebar categories={categories} activeCategory={activeCategory} />
           </aside>
 
           <div>
             <LiveProductGrid
               products={categoryProducts}
+              categories={categories}
               query={query}
               onQueryChange={setQuery}
               activeCategory={activeCategory}

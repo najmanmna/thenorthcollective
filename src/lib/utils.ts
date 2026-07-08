@@ -20,3 +20,9 @@ export function generateOrderNumber(prefix = "NC", date: Date = new Date()) {
   const randomPart = Math.floor(1000 + Math.random() * 9000)
   return `${prefix}-${datePart}-${randomPart}`
 }
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+export function isValidEmail(value: string) {
+  return EMAIL_PATTERN.test(value)
+}

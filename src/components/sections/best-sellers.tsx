@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-import { PRODUCTS } from "@/content/products";
 import { ProductCard } from "@/features/catalog/product-card";
+import type { Product } from "@/types/product";
 
-const BEST_SELLERS = PRODUCTS.filter((product) => product.featured);
+export function BestSellers({ products }: { products: Product[] }) {
+  const bestSellers = products.filter((product) => product.featured);
 
-export function BestSellers() {
   return (
     <section className="bg-surface py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -27,7 +27,7 @@ export function BestSellers() {
         </div>
 
         <div className="mt-10 grid grid-cols-2 gap-6 lg:grid-cols-4">
-          {BEST_SELLERS.map((product) => (
+          {bestSellers.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

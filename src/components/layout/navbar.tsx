@@ -20,15 +20,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { CATEGORIES } from "@/content/categories";
 import { useOrderList } from "@/features/orders/order-list-context";
+import type { Category } from "@/types/product";
 
 const NAV_LINKS = [
   { label: "Custom Orders", href: "/custom-orders" },
   { label: "About", href: "/about" },
 ];
 
-export function Navbar() {
+export function Navbar({ categories }: { categories: Category[] }) {
   const [open, setOpen] = useState(false);
   const { totalCount } = useOrderList();
 
@@ -61,7 +61,7 @@ export function Navbar() {
               <ChevronDown className="h-3.5 w-3.5 opacity-50" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" className="w-56">
-              {CATEGORIES.map((category) => (
+              {categories.map((category) => (
                 <DropdownMenuItem key={category.slug} asChild>
                   <Link href={`/shop/${category.slug}`}>{category.name}</Link>
                 </DropdownMenuItem>
@@ -175,7 +175,7 @@ export function Navbar() {
                   <span className="px-2 pb-1 pt-3 text-xs font-medium uppercase tracking-wide text-bronze">
                     Shop by Category
                   </span>
-                  {CATEGORIES.map((category) => (
+                  {categories.map((category) => (
                     <Link
                       key={category.slug}
                       href={`/shop/${category.slug}`}

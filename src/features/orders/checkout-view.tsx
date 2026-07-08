@@ -3,18 +3,17 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { PRODUCTS } from "@/content/products";
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/types/product";
 import { CustomerInfoForm } from "./customer-info-form";
 import { useOrderList } from "./order-list-context";
 
-export function CheckoutView() {
+export function CheckoutView({ products }: { products: Product[] }) {
   const { items } = useOrderList();
 
   const lineItems = items
     .map((item) => {
-      const product = PRODUCTS.find((entry) => entry.id === item.productId);
+      const product = products.find((entry) => entry.id === item.productId);
       return product ? { product, quantity: item.quantity } : null;
     })
     .filter(
@@ -63,7 +62,7 @@ export function CheckoutView() {
       </div>
 
       <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start lg:gap-16">
-        <CustomerInfoForm />
+        <CustomerInfoForm products={products} />
 
         <div className="flex flex-col gap-6 border border-ink/20 bg-ivory p-6">
           <h2 className="font-display text-lg text-ink">Order Summary</h2>

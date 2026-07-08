@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
+import { Navbar } from "@/components/layout/navbar";
+import { CategoryStrip } from "@/components/layout/category-strip";
+import { Footer } from "@/components/layout/footer";
+import { OrderListProvider } from "@/features/orders/order-list-context";
 
 const lato = Lato({
   weight: ["400", "700"],
@@ -20,7 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${lato.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <OrderListProvider>
+          <Navbar />
+          <CategoryStrip />
+          {children}
+          <Footer />
+        </OrderListProvider>
+      </body>
     </html>
   );
 }

@@ -47,7 +47,7 @@ export function Navbar() {
               className="h-10 w-10 object-contain"
               priority
             />
-            <span className="font-display text-lg tracking-wide text-ink hidden sm:block">
+            <span className="font-display text-sm tracking-wide text-ink sm:text-lg">
               The North Collective
             </span>
           </Link>

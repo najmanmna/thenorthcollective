@@ -1,12 +1,15 @@
 export function BrandIntro() {
   return (
     <section className="bg-ivory py-16 sm:py-20">
-      <div className="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 px-4 text-center sm:px-6 lg:px-8">
+        <h2 className="font-display text-xl tracking-wide text-ink uppercase sm:text-2xl">
+          Welcome to The North Collective
+        </h2>
         <p className="text-base leading-relaxed text-ink/80 sm:text-lg">
-          The North Collective brings Sri Lanka a curated selection of
-          everyday essentials, sourced directly from trusted retailers across
-          Canada. From pantry staples to skincare, we handle the sourcing so
-          you get the real thing, delivered to your door.
+          Every product at North Collective is thoughtfully chosen for its
+          quality, authenticity and everyday value. From pantry staples and
+          healthy snacks to wellness, beauty and family essentials, we bring
+          globally trusted brands closer to your home.
         </p>
       </div>
     </section>

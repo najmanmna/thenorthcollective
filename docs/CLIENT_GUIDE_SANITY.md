@@ -62,7 +62,7 @@ Click **Custom Orders** in the sidebar. Works exactly like Orders:
 Click **Products** in the sidebar for the full catalogue table (photo, name, brand, category, price, availability, and any Featured/New flags).
 
 ### To edit an existing product
-Click **Edit** on its row. You can change any field, then click **Publish** (see Section 8 — this step is easy to forget).
+Click **Edit** on its row. You can change any field, then click **Publish** (see Section 10 — this step is easy to forget).
 
 ### To add a new product
 1. In the sidebar, scroll to **Product** (the plain content-list item, not the Products tool) and click the **+** button, or open any existing product and use the "Create new" option.
@@ -143,7 +143,24 @@ Sanity saves your edits as a **draft** while you're working. Nothing changes on 
 - If you close a document without publishing, your edits are saved as a draft — you can come back and finish later, but the website still shows the old version until you publish.
 - Always double check you've clicked **Publish** after editing.
 
-## 11. How Long Until Changes Show Up on the Site
+---
+
+## 11. Temporarily Removing a Product (Unpublish)
+
+Sold out, discontinued for now, or just not ready to sell yet? You don't need to delete the product — **unpublish** it instead:
+
+1. Open the product (via **Products** → **Edit**, or from the **Product** list).
+2. Look for the **Publish** button area at the top — click the small arrow/menu next to it and choose **Unpublish**.
+3. The product stops showing anywhere on the website (shop page, homepage, search) — same short delay as any other change (see Section 12) — but all its details, images, and settings are kept safely.
+4. To bring it back later, open it again and click **Publish**. Nothing needs to be re-entered.
+
+**Unpublish vs. Delete — use the right one:**
+- **Unpublish** = hide it, keep everything, bring it back anytime. Use this for "out of stock," "seasonal," or "not ready yet."
+- **Delete** = gone permanently (the fields, images, everything). Only use this for something you're sure you'll never need again — a duplicate you created by mistake, for example.
+
+This same Unpublish option works on categories, hero banners, and retailer logos too, in case you ever want to temporarily pull one of those without losing it.
+
+## 12. How Long Until Changes Show Up on the Site
 
 The website doesn't hit the database on every single visit — it briefly caches content to stay fast. After you publish a change, expect:
 
@@ -155,7 +172,7 @@ If you need a change to appear *immediately* for a demo or urgent fix, let your 
 
 ---
 
-## 12. Quick Reference
+## 13. Quick Reference
 
 | I want to... | Go to |
 |---|---|
@@ -164,6 +181,8 @@ If you need a change to appear *immediately* for a demo or urgent fix, let your 
 | Change what's "Available Now" vs "Pre-Order" | **Products** → edit product → Availability |
 | Add a new product | **Product** → Create new |
 | Show a product on the homepage | **Products** → edit product → turn on Featured or New |
+| Temporarily hide a sold-out product | **Products** → edit product → **Unpublish** |
+| Bring a hidden product back | Open it → **Publish** |
 | Reorder the shop menu | **Category** → change the Order number |
 | Change the homepage rotating banners | **Hero Banner** |
 | Change the "Where We Shop For You" logos | **Retailer Logo** |

@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { FacebookIcon, InstagramIcon, TikTokIcon } from "@/components/icons/social-icons";
 import { SOCIAL_LINKS } from "@/lib/constants/social";
@@ -65,6 +68,12 @@ function FooterColumn({
 }
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === "/guide") {
+    return null;
+  }
+
   return (
     <footer className="border-t border-ink/10 bg-ivory">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

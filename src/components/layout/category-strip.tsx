@@ -8,7 +8,7 @@ import type { Category } from "@/types/product";
 export function CategoryStrip({ categories }: { categories: Category[] }) {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/shop")) {
+  if (pathname.startsWith("/shop") || pathname === "/guide") {
     return null;
   }
 

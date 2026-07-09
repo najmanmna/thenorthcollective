@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ChevronDown, Menu, Search, ShoppingBag } from "lucide-react";
 
@@ -31,6 +32,11 @@ const NAV_LINKS = [
 export function Navbar({ categories }: { categories: Category[] }) {
   const [open, setOpen] = useState(false);
   const { totalCount } = useOrderList();
+  const pathname = usePathname();
+
+  if (pathname === "/guide") {
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-ink/5 bg-background/80 backdrop-blur-md">

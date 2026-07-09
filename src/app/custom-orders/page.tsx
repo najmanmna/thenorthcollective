@@ -6,7 +6,7 @@ import { CustomOrderForm } from "@/features/custom-orders/custom-order-form";
 export const metadata: Metadata = {
   title: "Custom Orders at The North Collective",
   description:
-    "Can't find it in our catalogue? We'll source it directly from Canada.",
+    "Tell us what you need and our team will source authentic products from Canada, delivered to your doorstep in Sri Lanka.",
 };
 
 const STEPS = [
@@ -23,8 +23,14 @@ export default function CustomOrdersPage() {
           Custom Orders
         </span>
         <h1 className="max-w-2xl font-display text-3xl text-ink sm:text-4xl md:text-5xl">
-          Can&apos;t find it? We&apos;ll bring it from Canada.
+          Looking for something special? We&apos;ll source it for you.
         </h1>
+        <p className="max-w-lg text-sm text-stone sm:text-base">
+          Can&apos;t find the product you&apos;re looking for? Tell us what
+          you need and our team will do the searching. We&apos;ll source
+          authentic products from Canada and deliver them right to your
+          doorstep in Sri Lanka.
+        </p>
       </div>
 
       <div className="mx-auto mt-10 max-w-xl">

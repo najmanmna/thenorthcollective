@@ -1,29 +1,33 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Gem, ShieldCheck, Target } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Our Story at The North Collective",
   description:
-    "The North Collective travels across Canada to find what's rare, well-made, and worth bringing home to Sri Lanka.",
+    "North Collective curates genuinely good international products, chosen for quality, trusted ingredients, and everyday value.",
 };
 
 const VALUES = [
   {
+    icon: Gem,
     title: "Curated",
     description:
-      "Every product is chosen individually, not ordered in bulk to fill shelf space. If it doesn't earn its place, it doesn't make the collection.",
+      "Every product begins with a choice. We select only what we believe belongs in your home, products chosen for their quality, purpose and everyday value.",
   },
   {
+    icon: ShieldCheck,
     title: "Authentic",
     description:
-      "What you see is what's sourced: genuine goods from Canadian brands, not reproductions or grey-market substitutes.",
+      "From globally trusted brands to genuine imported products, everything you discover at North Collective is sourced with integrity and backed by authenticity.",
   },
   {
-    title: "Considered",
+    icon: Target,
+    title: "Intentional",
     description:
-      "Small numbers, chosen with care. We'd rather bring home the right things than the most things.",
+      "We believe in thoughtful curation over endless choice. Every addition to our collection earns its place, so you can shop with confidence.",
   },
 ];
 
@@ -43,22 +47,34 @@ export default function AboutPage() {
 
       <div className="mt-12 flex flex-col gap-6 text-base leading-relaxed text-stone sm:text-lg">
         <p>
-          The North Collective began with a simple idea: there are things
-          worth carrying across the world, and they deserve to be found with
-          the same care they were made.
+          North Collective began with a simple belief: discovering genuinely
+          good international products shouldn&apos;t depend on overseas
+          travel or asking someone to bring them home.
         </p>
         <p>
-          We travel across Canada to find what&apos;s rare, well-made, and
-          worth bringing home to Sri Lanka, from pantry staples to skincare
-          to everyday essentials. Nothing is mass-ordered. Every product
-          starts as something we&apos;d want in our own home first.
+          We set out to build a destination where carefully selected products
+          from around the world could be found in one place, products chosen
+          not because they are popular, but because they offer exceptional
+          quality, trusted ingredients and everyday value.
+        </p>
+        <p className="font-display text-lg text-ink sm:text-xl">
+          Every product on our shelves earns its place.
         </p>
         <p>
-          The business runs on direct conversation, not automation. Instagram
-          and WhatsApp have always been how we&apos;ve connected with
-          customers, and this site doesn&apos;t replace that. It gives you a
-          calmer way to browse before we pick up the conversation and confirm
-          the details together.
+          Whether it&apos;s your morning coffee, your child&apos;s lunchbox
+          snack, your wellness routine or your pantry essentials, we believe
+          everyday choices deserve extraordinary quality.
+        </p>
+        <p>
+          Today, North Collective continues to curate products from
+          internationally trusted brands, making it easier for Sri Lankan
+          families to discover, enjoy and experience better products every
+          day.
+        </p>
+        <p className="font-display text-lg text-ink sm:text-xl">
+          Because great products don&apos;t simply fill a shelf.
+          <br />
+          They become part of everyday life.
         </p>
       </div>
 
@@ -70,6 +86,11 @@ export default function AboutPage() {
             key={value.title}
             className="flex flex-col gap-3 border-t border-ink/15 pt-6"
           >
+            <value.icon
+              className="h-7 w-7 text-bronze"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
             <h2 className="font-display text-xl text-ink">{value.title}</h2>
             <p className="text-sm leading-relaxed text-stone">
               {value.description}
@@ -80,7 +101,7 @@ export default function AboutPage() {
 
       <div className="mt-16 flex justify-center">
         <Button size="lg" className="px-8 tracking-widest uppercase" asChild>
-          <Link href="/shop">Explore the Collection</Link>
+          <Link href="/shop">Discover the Collection</Link>
         </Button>
       </div>
     </div>

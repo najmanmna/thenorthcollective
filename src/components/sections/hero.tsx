@@ -51,7 +51,10 @@ export function Hero({ banners }: { banners: HeroBanner[] }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative aspect-3/2 w-full overflow-hidden sm:aspect-auto sm:h-140 lg:h-160">
+      <div
+        className="relative aspect-[var(--hero-aspect)] w-full overflow-hidden sm:aspect-auto sm:h-140 lg:h-160"
+        style={{ "--hero-aspect": banner.aspectRatio } as React.CSSProperties}
+      >
         <AnimatePresence initial={false}>
           <motion.div
             key={banner.id}

@@ -6,20 +6,26 @@ import { BestSellers } from "@/components/sections/best-sellers";
 import { FeaturedCategories } from "@/components/sections/featured-categories";
 import { CustomOrders } from "@/components/sections/custom-orders";
 import { WhyChooseUs } from "@/components/sections/why-choose-us";
-import { getAllCategories, getAllProducts, getHeroBanners } from "@/lib/sanity/queries";
+import {
+  getAllCategories,
+  getAllProducts,
+  getHeroBanners,
+  getRetailerLogos,
+} from "@/lib/sanity/queries";
 
 export default async function Home() {
-  const [products, categories, heroBanners] = await Promise.all([
+  const [products, categories, heroBanners, retailerLogos] = await Promise.all([
     getAllProducts(),
     getAllCategories(),
     getHeroBanners(),
+    getRetailerLogos(),
   ]);
 
   return (
     <main className="flex flex-1 flex-col">
       <Hero banners={heroBanners} />
       <BrandIntro />
-      <SourcedFrom />
+      <SourcedFrom logos={retailerLogos} />
       <WhatsNew products={products} />
       <BestSellers products={products} />
       <FeaturedCategories categories={categories} />

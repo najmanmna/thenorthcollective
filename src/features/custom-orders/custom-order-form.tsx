@@ -115,7 +115,7 @@ export function CustomOrderForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="phone">Phone Number</Label>
+        <Label htmlFor="phone">Mobile Number</Label>
         <Input
           id="phone"
           type="tel"
@@ -124,13 +124,16 @@ export function CustomOrderForm() {
           aria-invalid={Boolean(errors.phone)}
           placeholder="+94 77 123 4567"
         />
+        <p className="text-xs text-stone">
+          We&apos;ll send your quotation and order updates here.
+        </p>
         {errors.phone && (
           <p className="text-xs text-destructive">{errors.phone}</p>
         )}
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email Address (optional)</Label>
+        <Label htmlFor="email">Email Address (Optional)</Label>
         <Input
           id="email"
           type="email"
@@ -139,9 +142,6 @@ export function CustomOrderForm() {
           aria-invalid={Boolean(errors.email)}
           placeholder="amaya@example.com"
         />
-        <p className="text-xs text-stone">
-          We&apos;ll send a confirmation here if provided.
-        </p>
         {errors.email && (
           <p className="text-xs text-destructive">{errors.email}</p>
         )}
@@ -154,23 +154,49 @@ export function CustomOrderForm() {
           value={details}
           onChange={(event) => setDetails(event.target.value)}
           aria-invalid={Boolean(errors.details)}
-          placeholder="Brand, product, size, or a link/photo reference"
+          placeholder="e.g. Kirkland almonds, 1.36kg"
           rows={4}
         />
+        <p className="text-xs text-stone">
+          Tell us the brand, product name, size, flavour, or simply paste a
+          product link.
+        </p>
         {errors.details && (
           <p className="text-xs text-destructive">{errors.details}</p>
         )}
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="notes">Additional Notes (optional)</Label>
+        <Label htmlFor="notes">Additional Information (Optional)</Label>
         <Textarea
           id="notes"
           value={notes}
           onChange={(event) => setNotes(event.target.value)}
-          placeholder="Quantity, budget, timeline, anything else?"
+          placeholder="Anything else we should know?"
           rows={3}
         />
+        <p className="text-xs text-stone">
+          Share your preferred quantity, budget, or any special requests.
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-2 border-l-2 border-bronze bg-ivory p-4">
+        <span className="text-xs font-bold tracking-wide text-ink uppercase">
+          Before You Submit
+        </span>
+        <ul className="flex flex-col gap-1.5 text-xs leading-relaxed text-stone">
+          <li>
+            A 50% advance payment is required to confirm all custom orders.
+          </li>
+          <li>
+            Estimated delivery is 14–21 days from the date your order is
+            confirmed.
+          </li>
+          <li>
+            Delivery timelines may vary depending on product availability
+            and international shipping schedules.
+          </li>
+        </ul>
       </div>
 
       <Button
@@ -178,7 +204,7 @@ export function CustomOrderForm() {
         size="lg"
         className="w-full px-8 tracking-widest uppercase"
       >
-        Request Order
+        Request a Custom Order
       </Button>
     </form>
   );

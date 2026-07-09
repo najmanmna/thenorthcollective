@@ -1,6 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { FacebookIcon, InstagramIcon, TikTokIcon } from "@/components/icons/social-icons";
+import { SOCIAL_LINKS } from "@/lib/constants/social";
+
+const SOCIALS = [
+  { label: "Instagram", href: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
+  { label: "TikTok", href: SOCIAL_LINKS.tiktok, Icon: TikTokIcon },
+  { label: "Facebook", href: SOCIAL_LINKS.facebook, Icon: FacebookIcon },
+];
+
 const SHOP_LINKS = [{ label: "All Products", href: "/shop" }];
 
 const COMPANY_LINKS = [
@@ -105,6 +114,25 @@ export function Footer() {
               Curated global finds, sourced from Canada and carried home to
               Sri Lanka. Chosen with care, never mass-produced.
             </p>
+            <div className="flex flex-col gap-3">
+              <span className="text-[10px] font-bold tracking-[0.3em] text-bronze uppercase">
+                Connect With Us
+              </span>
+              <div className="flex items-center gap-4">
+                {SOCIALS.map(({ label, href, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="text-ink/60 transition-colors duration-200 hover:text-bronze"
+                  >
+                    <Icon className="h-5 w-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Links Grid */}

@@ -4,7 +4,7 @@
  * the order success screen falls back to a plain confirmation when unset
  * rather than linking to a placeholder or wrong number.
  */
-export const WHATSAPP_BUSINESS_NUMBER = "+94717411188";
+export const WHATSAPP_BUSINESS_NUMBER = "+94715907151";
 
 function buildWhatsAppLink(message: string) {
   const digitsOnly = WHATSAPP_BUSINESS_NUMBER.replace(/\D/g, "");

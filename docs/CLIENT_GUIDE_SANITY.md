@@ -7,7 +7,7 @@ This is your admin dashboard for the website. From here you can add and edit pro
 ## 1. Logging In
 
 1. Go to **https://north-collective.sanity.studio**
-2. Log in with the account email: **thenorthcollectiveweb@gmail.com** (or whichever email your Sanity account uses).
+2. Log in with the account email: **hdstudiolk@gmail.com** (or whichever email your Sanity account uses).
 3. You'll land on the main dashboard with a sidebar on the left.
 
 ---

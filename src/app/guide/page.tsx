@@ -42,7 +42,7 @@ const SECTIONS: Section[] = [
         </li>
         <li>
           Log in with the account email:{" "}
-          <strong className="text-ink">thenorthcollectiveweb@gmail.com</strong>
+          <strong className="text-ink">hdstudiolk@gmail.com</strong>
         </li>
         <li>You&apos;ll land on the main dashboard with a sidebar on the left.</li>
       </ol>
